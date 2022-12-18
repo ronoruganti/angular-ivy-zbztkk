@@ -1,0 +1,31 @@
+<div>
+  <app-search></app-search>
+</div>
+
+<div>
+  <mat-sidenav-container class="mat-drawer-content-custom">
+    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+
+      <ng-container matColumnDef="articleTitle">
+        <mat-header-cell *matHeaderCellDef>Article Title</mat-header-cell>
+        <mat-cell class="mat-cell-articletitle" *matCellDef="let article">{{ article.title }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+        <mat-cell class="mat-cell-articletitle" *matCellDef="let article">
+          <a href="{{ article.url }}" target="_blank">Go to Article</a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    
+      <!-- (page) = "pageEvent = $event"   -->
+
+  </mat-sidenav-container></div>
+  <div>
+    <mat-paginator [pageSize]="4" #paginator></mat-paginator>
+</div>
