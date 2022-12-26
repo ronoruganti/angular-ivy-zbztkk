@@ -1,0 +1,1 @@
+{"ast":null,"code":"import 'zone.js';\nimport 'zone.js/testing';","map":{"version":3,"mappings":"AAAA,OAAO,SAAS;AAChB,OAAO,iBAAiB","names":[],"sourceRoot":"","sources":["C:\\Users\\Tanuj\\Downloads\\angular-ivy-zbztkk\\src\\test.ts"],"sourcesContent":["import 'zone.js';\r\nimport 'zone.js/testing';"]},"metadata":{},"sourceType":"module","externalDependencies":[]}

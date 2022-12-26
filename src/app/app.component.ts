@@ -1,58 +1,49 @@
 import { Component, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { map, tap } from "rxjs/operators";
-import { NewsApiService } from "./news-api.service";
+import { tap } from "rxjs/operators";
+import { HackerNewsApiService as HackerNewsApiService } from "./hacker-news-api.service";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
+
 export class AppComponent {
-  mArticles: Array<any>;
-  displayedColumns = ["articleTitle", "link"];
+  newsStories: Array<any>;
+  displayedColumns = ["storyTitle", "link"];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild('paginator') paginator: MatPaginator;
 
-  constructor(private newsapi: NewsApiService) {
-  }
+  constructor(private hackerNewsApi: HackerNewsApiService, public title: Title) {
+    this.title.setTitle('NTHackerNewsFE');
+}
 
   ngOnInit() {
-    //load articles
-    this.loadArticles();
+    this.loadStories();
   }
 
-  loadArticles() {
-    return this.newsapi
-      .initArticles()
-      .pipe(map(data => {
-        this.mArticles = data["articles"]
+  loadStories() {
+    return this.hackerNewsApi
+      .getLatestStories()
+      .pipe(tap(data => {
+        this.newsStories = <Array<any>>data;
       }));
   }
 
   ngAfterViewInit() {
-    this.loadArticles().subscribe(_ => {
-      console.log(this.mArticles.length);
-      this.dataSource = new MatTableDataSource(this.mArticles);
+    this.loadStories().subscribe(_ => {
+      this.dataSource = new MatTableDataSource(this.newsStories);
       this.dataSource.paginator = this.paginator;
+
     });
   }
 
-  searchArticles(source) {
-    console.log("selected source is: " + source);
-    this.newsapi
-      .getArticlesByID(source)
-      .subscribe((data) => (this.mArticles = data["articles"]));
+  search(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  //   loadLessonsPage() {
-  //     this.loadArticles(
-  //         this.art,
-  //         '',
-  //         'asc',
-  //         this.paginator.pageIndex,
-  //         this.paginator.pageSize);
-  // }
 }

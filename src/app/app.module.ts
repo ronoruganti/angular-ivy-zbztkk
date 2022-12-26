@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NewsApiService } from './news-api.service';
+import { HackerNewsApiService } from './hacker-news-api.service';
 
 import { AppComponent } from './app.component';
 
@@ -15,14 +15,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { SearchComponent } from './search/search.component';
 import { MatTableModule } from '@angular/material/table'
-import {MatPaginatorModule} from '@angular/material/paginator'
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatInputModule } from '@angular/material/input';
 
 
 
 @NgModule({
-  imports: [BrowserModule, 
+  imports: [BrowserModule,
     FormsModule,
     HttpClientModule,
     MatButtonModule,
@@ -35,10 +35,11 @@ import {MatPaginatorModule} from '@angular/material/paginator'
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatInputModule
   ],
-  declarations: [AppComponent, SearchComponent],
-  providers: [NewsApiService],
+  declarations: [AppComponent],
+  providers: [HackerNewsApiService, Title],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
